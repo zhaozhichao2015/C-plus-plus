@@ -143,9 +143,7 @@ C语言提供了6个位操作运算符。这些运算符只能作用于整型操
 在对unsigned类型的无符号值进行右移时，通常会对左边的空出的部分用0填补。
 在对signed类型的带符号值进行右移时，通常会对左边空出的部分用符号位填补。
 
- *getbits 函数： 返回x中从第p位开始的n位*
-  
-   unsigned getbits(unsigned x, int p, int n)
-   {
-       return (x >> (p + 1 - n) & ~(~0 << n))
-   }
+    /* getbits 函数： 返回x中从第p位开始的n位 */
+    unsigned getbits(unsigned x, int p, int n){
+      return (x >> (p + 1 - n) & ~(~0 << n))
+    }
