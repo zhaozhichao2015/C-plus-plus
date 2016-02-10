@@ -392,6 +392,64 @@ T& 类型的引用或T类型的变量可以用来初始化const T& 类型的引�
 - 1979年, AT&T实验室Dr. Bjarne Stroustrup开始发明  开始的版本称为: C with Classes- 1983年8月, 第一个C++实现投入使用 1983年10月, 正式命名为C++ (CPlusPlus)- 1985年10月, Bjarne完成了经典巨著The C++ Programming Language (第一版)
 - 1989年, C++2.0版发布- 1994年, ANSI C++标准发布- 1998年, ANSI和ISO联合发布 “C++98” 标准 • 加入STL (Standard Template Library) – 泛型设计- 2003年, ISO的C++标准委员会发布 “C++03” 标准 2005年, “Library Technical Report 1” (TR1) 技术报告发布
 - 2011年9月, ISO标准委员会通过了新的C++标准 -- C++11
-##### 3. 常用的C++编译器- GCC- Visual C++ 10.0 Dev C++- Eclipse- Borland C++Builder  
+##### 3. 常用的C++编译器- GCC- Visual C++ 10.0 Dev C++- Eclipse- Borland C++Builder 
+### 从客观事物抽象出类的例子
+#####写一个程序, 输入矩形的宽和高, 输出面积和周长- 矩形的属性
+    + 宽和高- 对矩形的操作 	+ 设置宽和高	+ 计算面积
+	+ 计算周长 
 
 
+		
+			class CRectangle {
+			public: 
+				int w, h; // 成员变量            
+				void Init( int w_, int h_ ) {    // 成员函数         
+					w = w_;             
+					h = h_;         
+				}         
+				int Area() {             
+					return w * h;         
+				}         
+				int Perimeter() {             
+					return 2 * ( w + h );         
+				}     
+			};
+			
+			int main() { 
+				int w, h; 
+				CRectangle r;  //r是一个对象 
+				cin >> w >> h; 
+				r.Init(w, h); 
+				cout << r.Area() << endl << r. Perimeter(); 
+				return 0; 
+			}
+
+#####对象的内存分配对象的内存空间• 对象的大小 = 所有成员变量的大小之和
+• E.g. CRectangle类的对象, sizeof(CRectangle) = 8每个对象各有自己的存储空间
+一个对象的某个成员变量被改变, 不会影响到其他的对象
+##### 对象间的运算对象之间可以用 ‘=’ 进行赋值
+不能用 ‘==’, ‘!=’, ‘>’, ‘<’, ‘>=’, ‘<=’进行比较 • 除非这些运算符经过了 “重载”#####访问类的成员变量和成员函数- 用法1: 对象名.成员名 
+		CRectangle r1, r2;		r1.w = 5; 		r2.Init(3,4);
+		
+- 用法2: 指针->成员名		
+		CRectangle r1, r2;		CRectangle * p1 = & r1;		CRectangle * p2 = & r2;		p1->w = 5;		p2->Init(3,4); //Init作用在p2指向的对象上
+		
+- 用法3: 引用名.成员名 
+		CRectangle r2; 		CRectangle & rr = r2; 		rr.w = 5;		rr.Init(3,4); //rr的值变了,r2的值也变
+		
+#####成员函数体和类的定义分开写
+		class CRectangle {		public:			int w, h;			int Area(); //成员函数仅在此处声明 int Perimeter() ;			void Init( int w_, int h_ );		};
+		int CRectangle::Area() { 
+            return w * h;		}		int CRectangle::Perimeter() {			return 2 * ( w + h ); 
+		}		void CRectangle::Init( int w_, int h_ ) { 
+			w=w_; h=h_;		}
+		
+###类成员的可访问范围
+类成员的可访问范围
+		class className {			private:				私有属性和函数, 只能在成员函数内被访问			public:				公有属性和函数, 可以在任何地方被访问			protected:				保护属性和函数		};
+1. 三种关键字出现的次数和先后次序都没有限制2. 设置私有成员的目的:强制对成员变量的访问一定要通过成员函数进行
+ 设置私有成员的机制 -- 隐藏		3. 缺省为私有成员4. 类的成员函数内部, 可以访问:
+当前对象的全部属性, 函数和同类其它对象的全部属性, 函数
+类的成员函数以外的地方:
+只能够访问该类对象的公有成员
+	
